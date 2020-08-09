@@ -1,0 +1,11 @@
+.icon-wrapper {
+  width: 32px;
+  height: 32px;
+  border-radius: 3px;
+  background-color: hsla(0, 0%, 100%, 0.3);
+  cursor: pointer;
+
+  &:hover {
+    background-color: hsla(0, 0%, 100%, 0.2);
+  }
+}
