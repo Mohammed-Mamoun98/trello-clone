@@ -1,11 +1,13 @@
+@import "../../App.scss";
+
 .icon-wrapper {
   width: 32px;
   height: 32px;
   border-radius: 3px;
-  background-color: hsla(0, 0%, 100%, 0.3);
+  background-color: $light-off-white;
   cursor: pointer;
 
   &:hover {
-    background-color: hsla(0, 0%, 100%, 0.2);
+    background-color: $darker-off-white;
   }
 }
