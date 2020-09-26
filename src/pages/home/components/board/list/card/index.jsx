@@ -5,11 +5,14 @@ import { PropTypes } from "prop-types";
 
 export default function ListCard(props) {
   return (
-    <CardActionArea style={theme.listCardContainer}>
-      <Paper style={theme.listCardContent}>{props.title}</Paper>
-    </CardActionArea>
+    <div {...props} ref={props.ref}>
+      <CardActionArea style={theme.listCardContainer}>
+        <Paper style={theme.listCardContent}>{props.title}</Paper>
+      </CardActionArea>
+    </div>
   );
 }
 ListCard.propTypes = {
   title: PropTypes.string.isRequired,
+  ref: PropTypes.any,
 };

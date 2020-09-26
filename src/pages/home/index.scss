@@ -5,4 +5,10 @@
   background-position: center;
   background-repeat: no-repeat;
   padding-top: 40px;
+  background-attachment: fixed;
+  overflow-x: auto;
+}
+.home .boards-wrapper {
+  gap: 0.5rem;
+  padding-left: 8px;
 }

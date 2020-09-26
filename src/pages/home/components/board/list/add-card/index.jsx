@@ -9,14 +9,14 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import { boardContext } from "./../../../../../../contexts/board/index";
+import { PropTypes } from "prop-types";
 
 const AddCard = (props) => {
   const [editMode, setEditMode] = useState(false);
   const [value, setValue] = useState("");
-
   const boardState = useContext(boardContext);
+  const { id } = boardState;
 
-  const { addListCard } = boardState;
   const inputRef = useRef(null);
 
   const editOff = () => {
@@ -35,7 +35,7 @@ const AddCard = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addListCard(value);
+    props.onSubmit(value);
     setEditMode(false);
   };
 
@@ -45,16 +45,29 @@ const AddCard = (props) => {
 
   return (
     <ClickAwayListener onClickAway={editOff}>
-      <div className="add-card" onClick={editOn}>
+      <div
+        className="add-card"
+        onClick={editOn}
+        style={{ ...props.containerStyle }}
+      >
         {!editMode && (
           <div className="add-card-container flex align-center">
-            <Add style={{ fontSize: "19px", marginRight: "4px" }} />
-            <h5 className="">Add another card</h5>
+            <Add
+              style={{ fontSize: "19px", marginRight: "4px", ...props.style }}
+            />
+            <h5 className="" style={{ ...props.style }}>
+              {props.title}
+            </h5>
           </div>
         )}
         {editMode && (
           <form onSubmit={handleSubmit}>
-            <Paper style={{ padding: "4px 8px", minHeight: "66px" }}>
+            <Paper
+              style={{
+                padding: "4px 8px",
+                minHeight: "66px",
+              }}
+            >
               <InputBase
                 placeholder="input here..."
                 fullWidth
@@ -67,6 +80,13 @@ const AddCard = (props) => {
       </div>
     </ClickAwayListener>
   );
+};
+
+AddCard.propTypes = {
+  onSubmit: PropTypes.func,
+  title: PropTypes.string.isRequired,
+  style: PropTypes.object,
+  containerStyle: PropTypes.object,
 };
 
 export default AddCard;
