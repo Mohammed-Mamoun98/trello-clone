@@ -8,9 +8,7 @@ import { boardContext } from "./../../../../../contexts/board/index";
 import CardList from "./cards/index";
 
 export default function List(props) {
-  const iconColor = "rgb(180,186,197)";
-  const boardState = useContext(boardContext);
-  const { addListCard } = boardState;
+  const { items, addListCard, editListCard, title } = props;
 
   const handleSubmit = (value) => {
     addListCard(value);
@@ -18,13 +16,13 @@ export default function List(props) {
   return (
     <div className="list">
       <div className="list-header flex  center justify-between">
-        <div className="">{props.title}</div>
+        <div className="">{title}</div>
         <IconButton size="small">
           <MoreHoriz style={{ color: "#172b3d", fontSize: "16px" }} />
         </IconButton>
       </div>
 
-      <CardList />
+      <CardList items={items} editListCard={editListCard} />
       <AddCard title="Add another card" onSubmit={handleSubmit} />
     </div>
   );

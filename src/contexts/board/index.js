@@ -5,6 +5,7 @@ const initState = {
   lists: [],
   editListCard: () => {},
   id: "",
+  title: "",
 };
 
 export const boardContext = createContext(initState);

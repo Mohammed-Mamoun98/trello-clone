@@ -1,13 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { boardContext } from "./../../../../../../contexts/board/index";
-import ListCard from "./../card/index";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { reorder } from "./../../../../../../utils/methods/array";
 import "./index.css";
+import { Homecontext } from "./../../../../../../contexts/home/index";
 
-export default function CardList() {
-  const boardState = useContext(boardContext);
-  const { lists, editListCard } = boardState;
+export default function CardList(props) {
+  const { items: lists, editListCard } = props;
+  const [isHovered, setIsHoverd] = useState(false);
+  const homeState = useContext(Homecontext);
+  const { dragState } = homeState;
+  console.log({ dragState });
+  const { changeDragState, whoIsDragged } = dragState;
+
   const grid = 8;
 
   const getListStyle = (isDraggingOver) => ({
@@ -22,12 +27,22 @@ export default function CardList() {
     if (!result.destination) {
       return;
     }
+    // changeDragState(false);
 
     const items = reorder(lists, result.source.index, result.destination.index);
-
     editListCard(items);
   };
 
+  const onDragStart = () => {
+    changeDragState(true);
+  };
+
+  const onMouseLeave = () => {
+    setIsHoverd(false);
+    changeDragState(false);
+  };
+
+  console.log({ isHovered });
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="droppable" direction="vertical">
@@ -41,10 +56,16 @@ export default function CardList() {
               <Draggable key={list.id} draggableId={list.id} index={index}>
                 {(provided) => (
                   <div
+                    // onMouseEnter={onDragStart}
+                    // onMouseLeave={onMouseLeave}
+                    // onMouseEnter={() => {
+                    //   setIsHoverd(true);
+                    // }}
                     className="list-card"
                     ref={provided.innerRef}
                     {...provided.dragHandleProps}
                     {...provided.draggableProps}
+                    // style={{ marginTop: isHovered && whoIsDragged && whoIsDragged !== id  ? "8px" : "0px" }}
                   >
                     {list.text}
                   </div>
@@ -56,29 +77,6 @@ export default function CardList() {
         )}
       </Droppable>
     </DragDropContext>
-
-    // <DragDropContext onDragEnd={onDragEnd}>
-    //   <Droppable droppableId="droppable" direction="horizontal">
-    //     {(provided, snapshot) => (
-    //       <>
-    //         {lists.map((list, index) => (
-    //           <Draggable key={list.id} draggableId={list.id} index={index}>
-    //             {(provided, snapshot) => (
-    //               <div
-    //                 ref={provided.innerRef}
-    //                 {...provided.draggableProps}
-    //                 {...provided.dragHandleProps}
-    //               >
-    //                 <ListCard title={list.text} />
-    //               </div>
-    //             )}
-    //           </Draggable>
-    //         ))}
-    //         {provided.placeholder}
-    //       </>
-    //     )}
-    //   </Droppable>
-    // </DragDropContext>
   );
 }
 
