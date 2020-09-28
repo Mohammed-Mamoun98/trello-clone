@@ -24,7 +24,8 @@ const initialState = {
   dragState: {
     isDraging: false,
     changeDragState: (value) => {},
-    whoIsDragged: "",
   },
+  whoIsDragged: "",
+  setWhoIsDragged: () => {},
 };
 export const Homecontext = createContext(initialState);

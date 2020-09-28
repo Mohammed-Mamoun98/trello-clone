@@ -35,6 +35,7 @@ export default function Board(props) {
         addListCard={addListCard}
         items={items}
         editListCard={editListCard}
+        boardID={id}
       />
     </div>
   );
