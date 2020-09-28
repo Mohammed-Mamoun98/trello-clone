@@ -10,9 +10,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { reorder } from "./../../utils/methods/array";
 
 export default function Home() {
-  const [boards, setBoards] = useState([
-    { title: "hello", id: uuidv4(), items: [] },
-  ]);
+  const [boards, setBoards] = useState([]);
   const [isDraging, setIsDraging] = useState(false);
   const [whoIsDragged, setWhoIsDragged] = useState("");
 
