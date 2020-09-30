@@ -70,9 +70,7 @@ export default function List(props) {
             className="list-cards-container"
             {...provided.droppableProps}
           >
-            <div className="">
-              <AddCard title="Add another card" onSubmit={handleSubmit} />
-            </div>
+            <AddCard title="Add another card" onSubmit={handleSubmit} />
           </div>
         )}
       </Droppable>

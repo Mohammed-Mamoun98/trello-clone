@@ -7,7 +7,7 @@ export default function Board(props) {
   const { editBoards, board, boards } = props;
   const { id, title, items } = board;
 
-  console.log({ boards_list: items });
+  console.log({ boards });
 
   const addListCard = (text) => {
     const newCard = { text, id: uuidv4(), boardID: id };

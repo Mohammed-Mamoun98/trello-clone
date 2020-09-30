@@ -12,7 +12,11 @@ export default function AddBoard(props) {
 
   const handleSubmit = (value) => {
     let title = value;
-    editBoards([...boards, { title, id: uuidv4(), items: [] }]);
+    const id = uuidv4();
+    editBoards([
+      ...boards,
+      { title, id, items: [{ hidden: true, id: uuidv4(), boardID: id }] },
+    ]);
   };
 
   return (

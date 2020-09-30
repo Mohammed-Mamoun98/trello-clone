@@ -8,11 +8,13 @@ import AddBoard from "./components/board/add-board/index";
 import { v4 as uuidv4 } from "uuid";
 import { DragDropContext } from "react-beautiful-dnd";
 import { reorder } from "./../../utils/methods/array";
+import { handleDragEnd } from "../../utils/methods/drag-methods";
 
 export default function Home() {
   const [boards, setBoards] = useState([]);
   const [isDraging, setIsDraging] = useState(false);
   const [whoIsDragged, setWhoIsDragged] = useState("");
+  const allCards = boards.map((b) => b.items).flat();
 
   const changeDragState = (state) => setIsDraging(state);
 
@@ -36,36 +38,7 @@ export default function Home() {
   };
 
   const onDragEnd = (result) => {
-    debugger;
-
-    if (!result.destination) return;
-    const { destination, source, draggableId } = result;
-    const { droppableId: targetedBoardId, index } = destination;
-    const { droppableId } = source;
-    const targetedBoard = boards.find((b) => b.id === targetedBoardId);
-    const sourceBoard = boards.find((b) => b.id === droppableId);
-    let { items } = targetedBoard;
-    const { items: sourceItems } = sourceBoard;
-    const draggedItem = sourceItems.find((item) => item.id === draggableId);
-    const notTheSameSource = targetedBoard.id !== sourceBoard.id;
-
-    const newItems = reorder(
-      sourceItems,
-      result.source.index,
-      result.destination.index
-    );
-
-    if (notTheSameSource) {
-      items.splice(index, 0, draggedItem);
-      editListCard(targetedBoard.id, items);
-      editListCard(
-        sourceBoard.id,
-        newItems.filter((d) => d.id !== draggedItem.id)
-      );
-    } else {
-      items = newItems;
-      editListCard(sourceBoard.id, newItems);
-    }
+    handleDragEnd(result, boards, allCards, editListCard);
   };
 
   return (

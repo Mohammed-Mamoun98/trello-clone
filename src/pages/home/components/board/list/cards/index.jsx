@@ -6,64 +6,54 @@ import "./index.css";
 import { Homecontext } from "./../../../../../../contexts/home/index";
 
 const CardList = React.memo((props) => {
-  const { items: lists, editListCard, boardID } = props;
-  const homeState = useContext(Homecontext);
+  const { items: lists } = props;
 
-  const onDragEnd = (result, col, setCols) => {
-    // dropped outside the list
-    // props.onDragEnd();
-    debugger;
-    if (!result.destination) {
-      // props.onDragEnd(true);
-
-      return;
-    }
-    const items = reorder(lists, result.source.index, result.destination.index);
-    editListCard(items);
+  const hiddenStyle = (isHidden) => {
+    let style = isHidden
+      ? {
+          maxHeight: isHidden ? "0px" : "",
+          padding: isHidden ? "0px" : "",
+          margin: isHidden ? "0.1rem 0" : "",
+        }
+      : {};
+    return style;
   };
-
   return (
     // <DragDropContext onDragEnd={onDragEnd}>
-    <Droppable droppableId={boardID} direction="vertical">
-      {(provided, snapshot) => (
-        <div
-          ref={provided.innerRef}
-          className="list-cards-container"
-          {...provided.droppableProps}
-        >
-          {lists.map((list, index) => (
-            <Draggable key={list.id} draggableId={list.id} index={index}>
-              {(provided) => (
-                <div
-                  onMouseDown={() => {
-                    props.onDragStart(list.id);
-                  }}
-                  onMouseUpCapture={() => {
-                    // props.onDragEnd(true);
-                  }}
-                  className="list-card"
-                  ref={provided.innerRef}
-                  {...provided.dragHandleProps}
-                  {...provided.draggableProps}
-                  style={{
-                    userSelect: "none",
-                    ...provided.draggableProps.style,
-                  }}
-                >
-                  {list.text}
-                </div>
-              )}
-            </Draggable>
-          ))}
-          {provided.placeholder}
-        </div>
-      )}
-    </Droppable>
+    <>
+      {lists.map((list, index) => (
+        <Droppable droppableId={list.id} direction="vertical">
+          {(provided, snapshot) => (
+            <div
+              ref={provided.innerRef}
+              className="list-cards-container"
+              {...provided.droppableProps}
+            >
+              <Draggable key={list.id} draggableId={list.id} index={index}>
+                {(provided) => (
+                  <div
+                    className="list-card"
+                    ref={provided.innerRef}
+                    {...provided.dragHandleProps}
+                    {...provided.draggableProps}
+                    style={{
+                      userSelect: "none",
+                      ...provided.draggableProps.style,
+                      ...hiddenStyle(list.hidden),
+                    }}
+                  >
+                    {list?.text}
+                  </div>
+                )}
+              </Draggable>
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      ))}
+    </>
     // </DragDropContext>
   );
 });
 
 export default CardList;
-// {lists.map((list) => (
-//   <ListCard title={list.text} />
-// ))}
