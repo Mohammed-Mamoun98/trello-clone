@@ -21,11 +21,6 @@ items : Item[]
 const initialState = {
   boards: [],
   editBoards: () => {},
-  dragState: {
-    isDraging: false,
-    changeDragState: (value) => {},
-  },
-  whoIsDragged: "",
-  setWhoIsDragged: () => {},
+  changeBoardName: () => {},
 };
 export const Homecontext = createContext(initialState);

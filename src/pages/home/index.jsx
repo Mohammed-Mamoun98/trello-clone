@@ -11,17 +11,11 @@ import { reorder } from "./../../utils/methods/array";
 import { handleDragEnd } from "../../utils/methods/drag-methods";
 
 export default function Home() {
-  const [boards, setBoards] = useState([]);
-  const [isDraging, setIsDraging] = useState(false);
-  const [whoIsDragged, setWhoIsDragged] = useState("");
+  const [boards, setBoards] = useState([
+    { title: "hello", id: uuidv4(), items: [{ hidden: true, id: uuidv4() }] },
+  ]);
   const allCards = boards.map((b) => b.items).flat();
 
-  const changeDragState = (state) => setIsDraging(state);
-
-  const dragState = {
-    isDraging,
-    changeDragState,
-  };
   const editBoards = (newBoards) => setBoards(newBoards);
 
   const editListCard = (id, newList) => {
@@ -37,14 +31,26 @@ export default function Home() {
     editBoards([...newBoards]);
   };
 
+  const changeBoardName = (id, newName) => {
+    debugger;
+    const newBoards = boards.map((board) => {
+      if (board.id === id) {
+        return {
+          ...board,
+          title: newName,
+        };
+      } else return board;
+    });
+
+    editBoards([...newBoards]);
+  };
+
   const onDragEnd = (result) => {
     handleDragEnd(result, boards, allCards, editListCard);
   };
 
   return (
-    <Homecontext.Provider
-      value={{ boards, editBoards, dragState, whoIsDragged, setWhoIsDragged }}
-    >
+    <Homecontext.Provider value={{ boards, editBoards, changeBoardName }}>
       <div className="home ">
         <BoardHeader />
         <DragDropContext onDragEnd={onDragEnd}>
