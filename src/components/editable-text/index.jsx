@@ -4,7 +4,7 @@ import { useState } from "react";
 import "./index.scss";
 
 export default function EditableText(props) {
-  const { value, onSubmit, boardID } = props;
+  const { value, onSubmit } = props;
   const inputRef = useRef(null);
 
   const [editMode, setEditMode] = useState(false);
@@ -20,7 +20,7 @@ export default function EditableText(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!inputValue) return;
-    props.onSubmit(boardID, inputValue);
+    onSubmit(inputValue);
   };
 
   const hadnleChange = (e) => {

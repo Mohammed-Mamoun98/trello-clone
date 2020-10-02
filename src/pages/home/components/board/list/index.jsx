@@ -18,15 +18,14 @@ export default function List(props) {
   const handleSubmit = (value) => {
     addListCard(value);
   };
+
+  const handleBoardNameChange = (newName) => {
+    changeBoardName(boardID, newName);
+  };
   return (
     <div className="list">
       <div className="list-header flex  center justify-between">
-        {/* <div className="">{title}</div> */}
-        <EditableText
-          value={title}
-          onSubmit={changeBoardName}
-          boardID={boardID}
-        />
+        <EditableText value={title} onSubmit={handleBoardNameChange} />
         <IconButton size="small">
           <MoreHoriz style={{ color: "#172b3d", fontSize: "16px" }} />
         </IconButton>
