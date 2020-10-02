@@ -35,13 +35,9 @@ export default function EditableText(props) {
   }, [editMode]);
   return (
     <>
-      <ClickAwayListener onClickAway={toggleEditMode}>
+      <ClickAwayListener onClickAway={disableEdit}>
         <form onSubmit={handleSubmit}>
-          {!editMode && (
-            <div className="" onClick={toggleEditMode}>
-              {inputValue}
-            </div>
-          )}
+          {!editMode && <div onClick={toggleEditMode}>{inputValue}</div>}
           {editMode && (
             <input
               ref={inputRef}
