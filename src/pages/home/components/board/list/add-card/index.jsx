@@ -1,21 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "./index.scss";
 import { Add } from "@material-ui/icons";
-import {
-  Paper,
-  InputBase,
-  ClickAwayListener,
-  withStyles,
-  makeStyles,
-} from "@material-ui/core";
-import { boardContext } from "./../../../../../../contexts/board/index";
+import { Paper, InputBase, ClickAwayListener } from "@material-ui/core";
 import { PropTypes } from "prop-types";
 
 const AddCard = (props) => {
   const [editMode, setEditMode] = useState(false);
   const [value, setValue] = useState("");
-  const boardState = useContext(boardContext);
-  const { id } = boardState;
 
   const inputRef = useRef(null);
 

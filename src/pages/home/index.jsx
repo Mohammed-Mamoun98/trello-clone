@@ -1,19 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./index.scss";
 import Board from "./components/board";
 import BoardHeader from "./components/board-header";
-import { Homecontext } from "./../../contexts/home/index";
+import {
+  Homecontext,
+  dialogInitState,
+  toggleDialog,
+} from "./../../contexts/home/index";
 import { useState } from "react";
 import AddBoard from "./components/board/add-board/index";
 import { v4 as uuidv4 } from "uuid";
 import { DragDropContext } from "react-beautiful-dnd";
 import { reorder } from "./../../utils/methods/array";
 import { handleDragEnd } from "../../utils/methods/drag-methods";
+import ActivityDialog from "./components/board/activity-dialog";
 
 export default function Home() {
-  const [boards, setBoards] = useState([
-    { title: "hello", id: uuidv4(), items: [{ hidden: true, id: uuidv4() }] },
-  ]);
+  const [boards, setBoards] = useState([]);
+  const [dialogState, setDialogState] = useState(dialogInitState);
   const allCards = boards.map((b) => b.items).flat();
 
   const editBoards = (newBoards) => setBoards(newBoards);
@@ -32,7 +36,6 @@ export default function Home() {
   };
 
   const changeBoardName = (id, newName) => {
-    debugger;
     const newBoards = boards.map((board) => {
       if (board.id === id) {
         return {
@@ -49,8 +52,24 @@ export default function Home() {
     handleDragEnd(result, boards, allCards, editListCard);
   };
 
+  const handleToggleDialog = () => {
+    debugger;
+    const newState = { open: !dialogState.open, card: null };
+    setDialogState({ ...newState });
+  };
+
+  const setDialogInfo = (cardId) => {
+    const card = allCards.find((c) => c.id === cardId);
+    setDialogState({ ...dialogState, card, open: true });
+  };
+
+  useEffect(() => {
+    console.log({ dialogState });
+  }, [dialogState]);
   return (
-    <Homecontext.Provider value={{ boards, editBoards, changeBoardName }}>
+    <Homecontext.Provider
+      value={{ changeBoardName, handleToggleDialog, setDialogInfo }}
+    >
       <div className="home ">
         <BoardHeader />
         <DragDropContext onDragEnd={onDragEnd}>
@@ -64,9 +83,10 @@ export default function Home() {
               />
             ))}
 
-            <AddBoard />
+            <AddBoard boards={boards} editBoards={editBoards} />
           </div>
         </DragDropContext>
+        <ActivityDialog {...dialogState} onClose={handleToggleDialog} />
       </div>
     </Homecontext.Provider>
   );

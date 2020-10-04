@@ -1,14 +1,10 @@
 import React from "react";
 import AddCard from "../list/add-card";
 import { v4 as uuidv4 } from "uuid";
-
 import "./index.scss";
-import { useContext } from "react";
-import { Homecontext } from "../../../../../contexts/home";
 
 export default function AddBoard(props) {
-  const homeState = useContext(Homecontext);
-  const { editBoards, boards } = homeState;
+  const { editBoards, boards } = props;
 
   const handleSubmit = (value) => {
     let title = value;

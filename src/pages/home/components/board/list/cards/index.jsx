@@ -1,13 +1,12 @@
-import React, { useContext, useState } from "react";
-import { boardContext } from "./../../../../../../contexts/board/index";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { reorder } from "./../../../../../../utils/methods/array";
+import React, { useContext } from "react";
+import { Droppable, Draggable } from "react-beautiful-dnd";
+import { Homecontext } from "../../../../../../contexts/home";
 import "./index.css";
-import { Homecontext } from "./../../../../../../contexts/home/index";
 
 const CardList = React.memo((props) => {
   const { items: lists } = props;
-
+  const homeState = useContext(Homecontext);
+  const { handleToggleDialog, setDialogInfo } = homeState;
   const hiddenStyle = (isHidden) => {
     let style = isHidden
       ? {
@@ -18,8 +17,12 @@ const CardList = React.memo((props) => {
       : {};
     return style;
   };
+
+  const handleClick = (id) => {
+    setDialogInfo(id);
+    //open dialog
+  };
   return (
-    // <DragDropContext onDragEnd={onDragEnd}>
     <>
       {lists.map((list, index) => (
         <Droppable droppableId={list.id} direction="vertical">
@@ -32,6 +35,7 @@ const CardList = React.memo((props) => {
               <Draggable key={list.id} draggableId={list.id} index={index}>
                 {(provided) => (
                   <div
+                    onClick={() => handleClick(list.id)}
                     className="list-card"
                     ref={provided.innerRef}
                     {...provided.dragHandleProps}
@@ -52,7 +56,6 @@ const CardList = React.memo((props) => {
         </Droppable>
       ))}
     </>
-    // </DragDropContext>
   );
 });
 
