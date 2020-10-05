@@ -2,12 +2,17 @@ import React from "react";
 import AddCard from "../list/add-card";
 import { v4 as uuidv4 } from "uuid";
 import "./index.scss";
+import { addBoard } from "./../../../../../redux/actions/shared";
+import { useDispatch } from "react-redux";
 
 export default function AddBoard(props) {
   const { editBoards, boards } = props;
+  const dispatch = useDispatch();
 
   const handleSubmit = (value) => {
     let title = value;
+
+    dispatch(addBoard(title));
     const id = uuidv4();
     editBoards([
       ...boards,

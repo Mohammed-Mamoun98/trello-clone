@@ -1,13 +1,16 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.scss";
 import Router from "./router/router";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 function App() {
   return (
-    <div className="app">
-      <Router />
-    </div>
+    <Provider store={store}>
+      <div className="app">
+        <Router />
+      </div>
+    </Provider>
   );
 }
 

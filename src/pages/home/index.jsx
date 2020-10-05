@@ -1,55 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.scss";
 import Board from "./components/board";
 import BoardHeader from "./components/board-header";
-import {
-  Homecontext,
-  dialogInitState,
-  toggleDialog,
-} from "./../../contexts/home/index";
-import { useState } from "react";
+import { Homecontext, dialogInitState } from "./../../contexts/home/index";
 import AddBoard from "./components/board/add-board/index";
 import { v4 as uuidv4 } from "uuid";
 import { DragDropContext } from "react-beautiful-dnd";
-import { reorder } from "./../../utils/methods/array";
 import { handleDragEnd } from "../../utils/methods/drag-methods";
 import ActivityDialog from "./components/board/activity-dialog";
+import { useDispatch } from "react-redux";
+import { _editBoards, _editListCards } from "./../../redux/actions/shared";
+import useStoreState from "./../../hooks/useStoreState";
 
 export default function Home() {
+  const dispatch = useDispatch();
   const [boards, setBoards] = useState([]);
+  const storeState = useStoreState();
+  const { sharedReducer } = storeState;
+  const { boards: _boards } = sharedReducer;
+
   const [dialogState, setDialogState] = useState(dialogInitState);
-  const allCards = boards.map((b) => b.items).flat();
+  const allCards = _boards.map((b) => b.items).flat();
 
   const editBoards = (newBoards) => setBoards(newBoards);
 
   const editListCard = (id, newList) => {
-    const board = boards.find((b) => b.id === id);
-    const newBoard = { ...board, items: newList };
-    const newBoards = boards.map((board) => {
-      if (board.id === id) {
-        return {
-          ...newBoard,
-        };
-      } else return board;
-    });
-    editBoards([...newBoards]);
-  };
-
-  const changeBoardName = (id, newName) => {
-    const newBoards = boards.map((board) => {
-      if (board.id === id) {
-        return {
-          ...board,
-          title: newName,
-        };
-      } else return board;
-    });
-
-    editBoards([...newBoards]);
+    dispatch(_editListCards(id, newList));
   };
 
   const onDragEnd = (result) => {
-    handleDragEnd(result, boards, allCards, editListCard);
+    handleDragEnd(result, _boards, allCards, editListCard);
   };
 
   const handleToggleDialog = () => {
@@ -63,18 +43,13 @@ export default function Home() {
     setDialogState({ ...dialogState, card, open: true });
   };
 
-  useEffect(() => {
-    console.log({ dialogState });
-  }, [dialogState]);
   return (
-    <Homecontext.Provider
-      value={{ changeBoardName, handleToggleDialog, setDialogInfo }}
-    >
+    <Homecontext.Provider value={{ handleToggleDialog, setDialogInfo }}>
       <div className="home ">
         <BoardHeader />
         <DragDropContext onDragEnd={onDragEnd}>
           <div className="boards-wrapper flex ">
-            {boards.map((board) => (
+            {_boards.map((board) => (
               <Board
                 key={uuidv4()}
                 board={board}

@@ -1,5 +1,5 @@
 const sharedState = {
-  counter: 0,
+  boards: [],
 };
 
 export default sharedState;

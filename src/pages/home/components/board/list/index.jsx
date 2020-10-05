@@ -9,18 +9,22 @@ import CardList from "./cards/index";
 import { Homecontext } from "./../../../../../contexts/home/index";
 import { Droppable } from "react-beautiful-dnd";
 import EditableText from "../../../../../components/editable-text";
+import {
+  _addListCard,
+  _editBoardName,
+} from "../../../../../redux/actions/shared";
+import { useDispatch } from "react-redux";
 
 export default function List(props) {
-  const { items, addListCard, title, boardID } = props;
-  const homeState = useContext(Homecontext);
-  const { changeBoardName } = homeState;
+  const dispatch = useDispatch();
+  const { items, title, boardID, board } = props;
 
-  const handleSubmit = (value) => {
-    addListCard(value);
+  const handleSubmit = (text) => {
+    dispatch(_addListCard(text, board));
   };
 
   const handleBoardNameChange = (newName) => {
-    changeBoardName(boardID, newName);
+    dispatch(_editBoardName(boardID, newName));
   };
   return (
     <div className="list">
