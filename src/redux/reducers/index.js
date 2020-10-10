@@ -4,6 +4,7 @@ import {
   ADD_LIST_CARD,
   EDIT_BOARDS,
   EDIT_LIST_CARDS,
+  SET_DIALOG_ITEM,
 } from "../actions/shared";
 import sharedState from "./stateModels/shared";
 import { EDIT_BOARD_NAME } from "./../actions/shared";
@@ -30,7 +31,6 @@ const sharedReducer = (state = sharedState, action) => {
       };
     }
     case EDIT_LIST_CARDS:
-      debugger;
       const { id, newList } = action;
       const newBoards = getNewListCard(id, newList, boards);
       return {
@@ -61,6 +61,13 @@ const sharedReducer = (state = sharedState, action) => {
         boards,
       };
     }
+
+    case SET_DIALOG_ITEM:
+      const { item } = action;
+      return {
+        ...state,
+        dialogState: { item },
+      };
 
     default:
       return {
