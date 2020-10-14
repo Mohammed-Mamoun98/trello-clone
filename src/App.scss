@@ -29,3 +29,19 @@ $darker-off-white: hsla(0, 0%, 100%, 0.2);
 .justify-between {
   justify-content: space-between;
 }
+
+.flex-1 {
+  flex: 1;
+}
+
+input {
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: hidden;
+  background-color: none;
+}
+
+input:focus {
+  outline: none;
+}

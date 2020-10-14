@@ -24,3 +24,9 @@ $list-header-font: rgb(23, 43, 77);
     padding-bottom: 10px;
   }
 }
+
+.bold-text {
+  color: $list-header-font;
+  font-weight: 600;
+  font-size: 14px;
+}
