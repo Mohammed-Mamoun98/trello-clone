@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
 import { Droppable, Draggable } from "react-beautiful-dnd";
+import { useDispatch } from "react-redux";
 import { Homecontext } from "../../../../../../contexts/home";
 import "./index.css";
+import { setDialigItem } from "./../../../../../../redux/actions/shared";
 
 const CardList = React.memo((props) => {
-  const { items: lists } = props;
-  const homeState = useContext(Homecontext);
-  const { handleToggleDialog, setDialogInfo } = homeState;
+  const dispatch = useDispatch();
+  const { items } = props;
+
   const hiddenStyle = (isHidden) => {
     let style = isHidden
       ? {
@@ -18,24 +20,23 @@ const CardList = React.memo((props) => {
     return style;
   };
 
-  const handleClick = (id) => {
-    setDialogInfo(id);
-    //open dialog
+  const handleClick = (item) => {
+    dispatch(setDialigItem(item));
   };
   return (
     <>
-      {lists.map((list, index) => (
-        <Droppable droppableId={list.id} direction="vertical">
+      {items.map((item, index) => (
+        <Droppable droppableId={item.id} direction="vertical">
           {(provided, snapshot) => (
             <div
               ref={provided.innerRef}
               className="list-cards-container"
               {...provided.droppableProps}
             >
-              <Draggable key={list.id} draggableId={list.id} index={index}>
+              <Draggable key={item.id} draggableId={item.id} index={index}>
                 {(provided) => (
                   <div
-                    onClick={() => handleClick(list.id)}
+                    onClick={() => handleClick(item)}
                     className="list-card"
                     ref={provided.innerRef}
                     {...provided.dragHandleProps}
@@ -43,10 +44,10 @@ const CardList = React.memo((props) => {
                     style={{
                       userSelect: "none",
                       ...provided.draggableProps.style,
-                      ...hiddenStyle(list.hidden),
+                      ...hiddenStyle(item.hidden),
                     }}
                   >
-                    {list?.text}
+                    {item?.text}
                   </div>
                 )}
               </Draggable>

@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
 export const getNewListCard = (id, newList, boards) => {
-  debugger;
   const board = boards.find((b) => b.id === id);
   const newBoard = { ...board, items: newList };
   const newBoards = boards.map((board) => {

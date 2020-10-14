@@ -6,18 +6,11 @@ import { addBoard } from "./../../../../../redux/actions/shared";
 import { useDispatch } from "react-redux";
 
 export default function AddBoard(props) {
-  const { editBoards, boards } = props;
   const dispatch = useDispatch();
 
   const handleSubmit = (value) => {
     let title = value;
-
     dispatch(addBoard(title));
-    const id = uuidv4();
-    editBoards([
-      ...boards,
-      { title, id, items: [{ hidden: true, id: uuidv4(), boardID: id }] },
-    ]);
   };
 
   return (

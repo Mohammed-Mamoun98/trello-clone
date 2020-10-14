@@ -6,4 +6,8 @@ export const theme = {
   icon: {
     cursor: "pointer",
   },
+  dilogIcon:{
+    color: "#42526E", marginRight: "8px",
+    cursor: "pointer",
+  }
 };
