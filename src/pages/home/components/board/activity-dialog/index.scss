@@ -1,0 +1,30 @@
+.dialog-container {
+  & h4 {
+    font-size: 19px;
+    font-weight: 600;
+    color: #172b4d;
+  }
+
+  section {
+    margin-top: 36px;
+  }
+}
+
+.description-sec {
+  margin-top: 36px;
+
+  & .description-content {
+    background-color: #eaecf0;
+    color: gray;
+    margin-left: 32px;
+    padding: 8px 12px;
+    margin-top: 12px;
+    box-shadow: 0px 0px 4px -2px;
+  }
+}
+.in-list {
+  margin-left: 32px;
+  color: gray;
+  font-size: 12px;
+  margin-top: 4px;
+}
