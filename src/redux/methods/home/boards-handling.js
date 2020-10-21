@@ -4,6 +4,7 @@ export const getNewListCard = (id, newList, boards) => {
   const board = boards.find((b) => b.id === id);
   const newBoard = { ...board, items: newList };
   const newBoards = boards.map((board) => {
+          
     if (board.id === id) {
       return {
         ...newBoard,

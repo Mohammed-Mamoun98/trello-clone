@@ -17,7 +17,7 @@ const handleClick = ()=>{
       <Button variant="contained" color="primary" onClick={refetch} >
        { loading&&<CircularProgress style={{color:'white'}} />}
        { !loading&& <>get data</>}
-    </Button>
+     </Button>
     {JSON.stringify(data)}
 <br/>
     <Button variant="contained" color="primary" onClick={_refetch} >

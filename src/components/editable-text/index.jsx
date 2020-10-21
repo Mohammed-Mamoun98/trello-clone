@@ -4,14 +4,19 @@ import { useState } from "react";
 import "./index.scss";
 
 export default function EditableText(props) {
-  const { value, onSubmit } = props;
+  const { value, onSubmit , placeholder } = props;
+  console.log({value});
   const inputRef = useRef(null);
 
   const [editMode, setEditMode] = useState(false);
   const [inputValue, setInputValue] = useState(value);
 
-  const enableEdit = () => setEditMode(true);
-  const disableEdit = () => setEditMode(false);
+  const enableEdit = () => {
+    setEditMode(true)
+  };
+  const disableEdit = () => {
+    setEditMode(false)
+  };
 
   const toggleEditMode = () => {
     editMode ? disableEdit() : enableEdit();
@@ -20,7 +25,9 @@ export default function EditableText(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!inputValue) return;
+    if (inputRef.current) inputRef.current.blur();
     onSubmit(inputValue);
+    setEditMode(false)
   };
 
   const hadnleChange = (e) => {
@@ -30,20 +37,22 @@ export default function EditableText(props) {
     setInputValue(_value);
   };
 
-  useEffect(() => {
-    if (inputRef.current) inputRef.current.focus();
-  }, [editMode]);
+
+  const formClass = editMode ? 'editable-wrapper' : 'editable'
+  const formClasses = formClass + ' '+ props?.className || ''
+
   return (
     <>
       <ClickAwayListener onClickAway={disableEdit}>
-        <form onSubmit={handleSubmit}>
-          {!editMode && <div onClick={toggleEditMode}>{inputValue}</div>}
-          {editMode && (
+        <form onSubmit={handleSubmit} className={formClasses}>
+          {!editMode && <div onClick={toggleEditMode}>{value}</div>}
+          {editMode  && (
             <input
               ref={inputRef}
               onChange={hadnleChange}
               value={inputValue}
-              className="editable"
+              className="editable bold-text"
+              placeholder={props?.placeholder || 'add a placeholder'}
             />
           )}
         </form>

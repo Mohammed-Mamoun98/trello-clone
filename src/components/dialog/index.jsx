@@ -23,7 +23,7 @@ export default function Dialog(props) {
   return (
     <_Dialog {...props} fullWidth maxWidth="md" {...TransitionComponent}>
       {title && <DialogTitle>{title}</DialogTitle>}
-      <DialogContent style={{ ...dialog, minHeight: "50vh" }}>
+      <DialogContent style={{ ...dialog, minHeight: "50vh" , ...props.dialogStyle }}>
         {props.children}
       </DialogContent>
     </_Dialog>

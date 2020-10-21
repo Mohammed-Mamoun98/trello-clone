@@ -4,6 +4,7 @@ export const EDIT_LIST_CARDS = "EDIT_LIST_CARDS";
 export const ADD_LIST_CARD = "ADD_LIST_CARD";
 export const EDIT_BOARD_NAME = "EDIT_BOARD_NAME";
 export const SET_DIALOG_ITEM = "SET_DIALOG_ITEM";
+export const EDIT_ITEM_DESCRIPTION = "EDIT_ITEM_DESCRIPTION";
 
 export const setDialigItem = (item = {}) => ({
   type: SET_DIALOG_ITEM,
@@ -25,6 +26,13 @@ export const _editListCards = (id, newList) => ({
   type: EDIT_LIST_CARDS,
   id,
   newList,
+});
+
+export const editItemDescription = ( description , itemID , boardID) => ({
+  type: EDIT_ITEM_DESCRIPTION,
+ description,
+ itemID,
+ boardID
 });
 
 export const _editBoards = (boards = []) => ({

@@ -29,7 +29,7 @@ export default function List(props) {
   return (
     <div className="list">
       <div className="list-header flex  center justify-between">
-        <EditableText value={title} onSubmit={handleBoardNameChange} />
+        <EditableText value={title} onSubmit={handleBoardNameChange} inputClassName="bold-text" />
         <IconButton size="small">
           <MoreHoriz style={{ color: "#172b3d", fontSize: "16px" }} />
         </IconButton>

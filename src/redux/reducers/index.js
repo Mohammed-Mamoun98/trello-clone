@@ -5,6 +5,7 @@ import {
   EDIT_BOARDS,
   EDIT_LIST_CARDS,
   SET_DIALOG_ITEM,
+  EDIT_ITEM_DESCRIPTION,
 } from "../actions/shared";
 import sharedState from "./stateModels/shared";
 import { EDIT_BOARD_NAME } from "./../actions/shared";
@@ -15,11 +16,22 @@ import {
   addListCardMethod,
   changeBoardName,
 } from "./../methods/home/boards-handling";
+import { editDescription } from "../methods/home/item-handling";
 
 const sharedReducer = (state = sharedState, action) => {
   const { boards } = state;
 
   switch (action.type) {
+
+    case EDIT_ITEM_DESCRIPTION:{
+      const {itemID ,description , boardID } = action
+
+    const newBoards =   editDescription(itemID , boards , boardID,description)
+
+      return {
+        ...state,
+        boards : newBoards
+      }}
     case ADD_LIST_CARD: {
       const { text, board } = action;
       const { id } = board;
