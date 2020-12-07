@@ -24,6 +24,7 @@ export default function AddBoard(props) {
         padding: "4px 0px",
         padding: "0px",
         borderRadius: "3px",
+        height:'fit-content'
       }}
       onSubmit={handleSubmit}
     />
