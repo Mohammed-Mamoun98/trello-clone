@@ -29,7 +29,8 @@ export const addBoardMethod = (title, boards) => {
 
 export const addListCardMethod = (text, id, board) => {
   const newCard = { text, id: uuidv4(), boardID: id };
-  const newBoardItems = [...board.items, newCard];
+  const deleteBoardHiddentItem = board.items.filter(_b => !_b.hidden)
+  const newBoardItems = [...deleteBoardHiddentItem, newCard];
   return newBoardItems;
 };
 
