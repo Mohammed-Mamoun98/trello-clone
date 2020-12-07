@@ -35,20 +35,22 @@ const CardList = React.memo((props) => {
             >
               <Draggable key={item.id} draggableId={item.id} index={index}>
                 {(provided) => (
-                  <div
-                    onClick={() => handleClick(item)}
-                    className="list-card"
-                    ref={provided.innerRef}
-                    {...provided.dragHandleProps}
-                    {...provided.draggableProps}
-                    style={{
-                      userSelect: "none",
-                      ...provided.draggableProps.style,
-                      ...hiddenStyle(item.hidden),
-                    }}
-                  >
-                    {item?.text}
-                  </div>
+                  <>
+                    <div
+                      onClick={() => handleClick(item)}
+                      className="list-card"
+                      ref={provided.innerRef}
+                      {...provided.dragHandleProps}
+                      {...provided.draggableProps}
+                      style={{
+                        userSelect: "none",
+                        ...provided.draggableProps.style,
+                        ...hiddenStyle(item.hidden),
+                      }}
+                    >
+                      <div className="">{item?.text}</div>
+                    </div>
+                  </>
                 )}
               </Draggable>
               {provided.placeholder}
